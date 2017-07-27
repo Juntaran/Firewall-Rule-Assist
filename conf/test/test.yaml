@@ -1,0 +1,42 @@
+ZONE:
+
+    xl:
+        XUNLEI_SERVER: [ 10.10.10.10, 10.10.10.20 ]
+        
+    db:
+        FAL_SERVER:    [ 10.20.20.10, 10.200.0.0/16 ]
+        DB_MONITER:    [ '10.211.0.0/16', '10.222.0.0/16', '10.233.0/16' ]
+
+APPLICATION:
+    any:
+
+    db:
+        protocol: tcp
+        source-port:  1-65535 
+        destination-port: 10000
+    xunlei:
+        protocol: tcp
+        source-port:  1-65535 
+        destination-port: 1999
+    fal:
+        protocol: tcp
+        source-port:  1-65535 
+        destination-port: 1899
+        
+RULE:
+    - db-any:
+        from: [ '@DB_MONITER' ]
+        to:   [ '@XUNLEI_SERVER', '@FAL_SERVER' ]
+        applications: [ 'db' ]
+
+    - xunlei-any:
+        from: [ '@XUNLEI_SERVER' ]
+        to:   [ '@DB_MONITER' ]
+        applications: [ 'xunlei' ]
+
+    - fal-any:
+        from: [ '@FAL_SERVER', '@XUNLEI_SERVER' ]
+        to:   [ '@DB_SERVER' ]
+        applications: [ 'fal' ]
+
+
