@@ -3,7 +3,7 @@
 对 yaml 格式的防火墙配置文件进行解析  
 可以快速通过以下命令查找 集群/IP/服务 之间关系  
 
-## Requiremnt:
+## Requirement:
 
 - python3  Windows or Linux
 - yaml  pip3 install yaml
